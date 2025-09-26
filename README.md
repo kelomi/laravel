@@ -61,10 +61,12 @@ Get inside the Laravel container:
 docker exec -it laravel_redis_chat_app bash
 
 
-Inside the container:
+Inside the container: run the below
 
 composer install              # install Laravel dependencies
+
 php artisan key:generate      # generate Laravel app key
+
 php artisan migrate           # create database tables
 
 
@@ -81,7 +83,7 @@ Enter your Node.js container:
 docker exec -it laravel_chat_nodejs bash
 
 
-Inside the container:
+Inside the container: run
 
 npm install   # install dependencies
 
@@ -128,11 +130,11 @@ RuntimeException: The only supported ciphers are AES-128-CBC and AES-256-CBC...
 
 ✅ Fix (what I did):
 
-Generated a proper key:
+Generated a proper key: RUN
 
 docker exec -it laravel_redis_chat_app bash
-php artisan key:generate
 
+php artisan key:generate
 
 Or generated locally and copied .env in:
 
@@ -142,9 +144,13 @@ docker cp .env laravel_redis_chat_app:/var/www/.env
 Cleared Laravel’s cached configs:
 
 php artisan config:clear
+
 php artisan cache:clear
+
 php artisan route:clear
+
 php artisan view:clear
+
 php artisan config:cache
 
 
@@ -163,6 +169,7 @@ services:
 Alternative: Keep .env locally, re-copy on container recreate:
 
 docker cp .env laravel_redis_chat_app:/var/www/.env
+
 docker exec -it laravel_redis_chat_app bash -c "php artisan config:clear && php artisan config:cache"
 
 
