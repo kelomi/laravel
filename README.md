@@ -172,26 +172,25 @@ docker cp .env laravel_redis_chat_app:/var/www/.env
 
 docker exec -it laravel_redis_chat_app bash -c "php artisan config:clear && php artisan config:cache"
 
-
-⚠️ Security Note: Never commit .env with real secrets to Git. Keep .env in .gitignore and provide .env.example for others.
+#  Security Note: Never commit .env with real secrets to Git. Keep .env in .gitignore and provide .env.example for others.
 
 ✅ Proof of Success
 
 📸 Screenshots included:
 
-Login/Register page
+# Login/Register page
 
 ![alt text](image.png)
 
-Registering a user
+# Registering a user
 
 ![alt text](image-1.png)
 
-Logged in & ready to chat
+# Logged in & ready to chat
 
 ![alt text](image-2.png)
 
- Final Notes
+# Final Notes
 
 With this setup, anyone can:
 
