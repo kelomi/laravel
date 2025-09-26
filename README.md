@@ -130,18 +130,18 @@ RuntimeException: The only supported ciphers are AES-128-CBC and AES-256-CBC...
 
 ✅ Fix (what I did):
 
-Generated a proper key: RUN
+# Generated a proper key: RUN
 
 docker exec -it laravel_redis_chat_app bash
 
 php artisan key:generate
 
-Or generated locally and copied .env in:
+# Or generated locally and copied .env in:
 
 docker cp .env laravel_redis_chat_app:/var/www/.env
 
 
-Cleared Laravel’s cached configs:
+# Cleared Laravel’s cached configs:
 
 php artisan config:clear
 
