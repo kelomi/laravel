@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Statefulset
+metadata:
+  name: uptime-kuma-deployment
+  namespace: laravel-ns
+  labels:
+    app: uptime-kuma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      containers:
+      - name: uptime-kuma
+        image: louislam/uptime-kuma:1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001
+        volumeMounts:
+        - name: kuma-data
+          mountPath: /app/data
+      volumes:
+      - name: kuma-data
+        persistentVolumeClaim:
+          claimName: uptime-kuma-pvc # Will need to create this PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: uptime-kuma-pvc
+  namespace: laravel-ns
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi # Storage for the Kuma data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma-service
+  namespace: laravel-ns
+spec:
+  selector:
+    app: uptime-kuma
+  # Use NodePort to easily access it from outside the cluster for monitoring
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
+      nodePort: 30015

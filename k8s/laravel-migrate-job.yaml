@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: laravel-migrate-job
+  namespace: laravel-ns
+spec:
+  template:
+    spec:
+      containers:
+        - name: laravel-migrate
+          image: laranodechat-laravel:latest
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "Running Laravel migrations...";
+              cd /var/www;
+              chmod -R 775 storage bootstrap/cache;
+              chown -R www-data:www-data storage bootstrap/cache;
+              php artisan migrate --force;
+              echo "Migrations complete.";
+          env:
+            - name: DB_HOST
+              value: "mysql-service"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              value: "laranodechat"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: APP_ENV
+              value: "production"
+            - name: APP_DEBUG
+              value: "false"
+            - name: APP_KEY
+              value: "base64:uVgEMgnr6dv3oKuRfxp1OTlrRr9Qp8DANsu1Tb6B+fs="
+      restartPolicy: Never
+  backoffLimit: 3
