@@ -7,7 +7,7 @@ var redisClient = redis.createClient({
   port: process.env.REDIS_PORT || 6379
 });
 
-server.listen(8890);
+server.listen(3000, '0.0.0.0');
 users = {};
 
 // var redisClient = redis.createClient();

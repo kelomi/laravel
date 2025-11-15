@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend-nodejs
-          image: laranodechat-nodejs:latest
+          image: kelomi44/laranodechat-nodejs:latest 
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

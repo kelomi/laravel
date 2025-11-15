@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend-laravel
-          image: laranodechat-laravel:latest
+          image: kelomi44/laranodechat-laravel:latest 
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
@@ -51,7 +51,7 @@ spec:
             - name: APP_DEBUG
               value: "false"
             - name: APP_KEY
-              value: "base64:s6hIHBNQRMPyTj0rE71d5ok3JTqzbsztY9i9Am5afb8="
+              value: "base64:uVgEMgnr6dv3oKuRfxp1OTlrRr9Qp8DANsu1Tb6B+fs="
           resources:
             requests:
               cpu: "200m"
